@@ -8,9 +8,10 @@ export async function GET(req: NextRequest) {
   const p = req.nextUrl.searchParams.get("p") ?? "";
 
   try {
-    const expr = `users.find(x => x.username == '${u}' && x.password == '${p}')`;
-    // eslint-disable-next-line no-eval
-    const match = eval(expr);
+    const body = `return users.find(x => x.username == '${u}' && x.password == '${p}')`;
+    // eslint-disable-next-line no-new-func
+    const fn = new Function("users", body);
+    const match = fn(users);
     if (match) {
       // "JWT" with alg:none — base64(header).base64(payload).
       const header = Buffer.from(JSON.stringify({ alg: "none", typ: "JWT" })).toString("base64url");
