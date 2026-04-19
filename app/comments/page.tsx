@@ -16,6 +16,7 @@ export default function Comments() {
 
   async function post(e: React.FormEvent) {
     e.preventDefault();
+    if (!author || !body) return;
     await fetch("/api/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -27,28 +28,38 @@ export default function Comments() {
 
   return (
     <>
-      <h1>Comments</h1>
+      <h1>Client Community</h1>
+      <p style={{ color: "#5a6778", fontStyle: "italic", maxWidth: 680 }}>
+        A forum for our clients to share experiences, ask questions, and connect with one another.
+        Posts are moderated by International Bank staff.
+      </p>
+
       <div className="card">
+        <h3 style={{ marginTop: 0 }}>Start a discussion</h3>
         <form onSubmit={post}>
-          <label>Name</label>
-          <input value={author} onChange={(e) => setAuthor(e.target.value)} />
-          <label>Comment</label>
-          <textarea value={body} onChange={(e) => setBody(e.target.value)} rows={3} style={{ width: "100%" }} />
-          <div style={{ marginTop: "0.5rem" }}>
-            <button type="submit">Post</button>
+          <label>Your name</label>
+          <input value={author} onChange={(e) => setAuthor(e.target.value)} style={{ width: "100%" }} />
+          <label>Your message</label>
+          <textarea value={body} onChange={(e) => setBody(e.target.value)} rows={4} style={{ width: "100%" }} />
+          <div style={{ marginTop: "1rem" }}>
+            <button type="submit">Post to Community</button>
           </div>
         </form>
       </div>
-      <div>
+
+      <h2>Recent discussions</h2>
+      <div className="card" style={{ padding: 0 }}>
         {list.map((c) => (
-          <div key={c.id} className="card">
-            <strong>{c.author}</strong>
-            {/* Stored XSS: rendering raw HTML from user input. */}
-            <div dangerouslySetInnerHTML={{ __html: c.body }} />
+          <div key={c.id} className="comment">
+            <div className="avatar">{(c.author[0] || "?").toUpperCase()}</div>
+            <div style={{ flex: 1 }}>
+              <div className="comment-meta">{c.author}</div>
+              <div dangerouslySetInnerHTML={{ __html: c.body }} />
+            </div>
           </div>
         ))}
+        {list.length === 0 && <p style={{ padding: "1.5rem", color: "#5a6778", fontStyle: "italic", textAlign: "center" }}>No posts yet. Be the first to start a discussion.</p>}
       </div>
-      <p className="bug">Comments render raw HTML — stored XSS by design. No CSRF tokens either.</p>
     </>
   );
 }
