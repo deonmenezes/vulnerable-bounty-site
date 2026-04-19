@@ -1,0 +1,21 @@
+{
+  "name": "vulnerable-bounty-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Intentionally vulnerable web app for bug bounty practice. DO NOT USE WITH REAL DATA.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.0",
+    "@types/react": "18.3.3",
+    "typescript": "5.4.5"
+  }
+}

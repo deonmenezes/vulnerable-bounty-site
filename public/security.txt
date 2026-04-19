@@ -1,0 +1,6 @@
+Contact: mailto:deonmenezes04@gmail.com
+Expires: 2027-04-19T00:00:00.000Z
+Preferred-Languages: en
+Policy: /bounty
+Acknowledgments: /bounty
+# This site is intentionally vulnerable. Bug bounty rewards up to $2,000 USD for qualifying reports.
